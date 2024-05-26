@@ -1,0 +1,18 @@
+# Go
+bin/
+*.exe
+*.log
+.env
+go-template
+
+# VSCode
+.vscode/*
+!.vscode/extensions.json
+!.vscode/launch.json
+
+# Wails
+build/bin
+build/windows/installer/wails_tools.nsh
+frontend/dist
+frontend/wailsjs/go/main
+node_modules

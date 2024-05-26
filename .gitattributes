@@ -1,0 +1,27 @@
+*          text=auto
+
+.editorconfig text
+.gitattributes text export-ignore
+.gitignore text export-ignore
+
+*.css      text diff=css
+*.go       text diff=golang
+*.html     text diff=html
+*.js       text
+*.json     text
+*.manifest text
+*.md       text diff=markdown
+*.md5      text
+*.mod      text eol=lf
+*.nsi      text
+*.plist    text
+*.sum      text eol=lf
+*.toml     text
+*.ts       text
+*.txt      text
+*.yaml     text
+
+*.ico      binary
+*.png      binary
+*.svg      binary
+*.woff2    binary
