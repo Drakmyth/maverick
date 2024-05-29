@@ -1,0 +1,31 @@
+{{define "navbar"}}
+<nav id="side-nav">
+    <button
+        id="nav-home"
+        type="button"
+        hx-get="/home"
+        hx-target="#app"
+        {{if eq . "home"}}class="selected"{{end}}
+    >
+        🏠 Home
+    </button>
+    <button
+        id="nav-engines"
+        type="button"
+        hx-get="/engines"
+        hx-target="#app"
+        {{if eq . "engines"}}class="selected"{{end}}
+    >
+        💻 Engines
+    </button>
+    <button
+        id="nav-iwads"
+        type="button"
+        hx-get="/iwads"
+        hx-target="#app"
+        {{if eq . "iwads"}}class="selected"{{end}}
+    >
+        🎮 IWADs
+    </button>
+</nav>
+{{end}}
