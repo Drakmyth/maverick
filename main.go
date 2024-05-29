@@ -14,6 +14,16 @@ import (
 	"github.com/wailsapp/wails/v2/pkg/options/windows"
 )
 
+type PageHeader struct {
+	Title       string
+	Description string
+}
+
+type IWADDef struct {
+	Name string
+	Path string
+}
+
 //go:embed all:frontend/dist
 var assets embed.FS
 
@@ -64,17 +74,46 @@ func main() {
 func getHomePage(w http.ResponseWriter, r *http.Request) {
 	slog.Info("Getting Home")
 
-	tmpl.ExecuteTemplate(w, "home-page", nil)
+	pagedata := struct {
+		Header PageHeader
+	}{
+		Header: PageHeader{
+			Title:       "Home",
+			Description: "This is your new home.",
+		},
+	}
+
+	tmpl.ExecuteTemplate(w, "home-page", &pagedata)
 }
 
 func getEnginesPage(w http.ResponseWriter, r *http.Request) {
 	slog.Info("Getting Engines")
 
-	tmpl.ExecuteTemplate(w, "engines-page", nil)
+	pagedata := struct {
+		Header PageHeader
+	}{
+		Header: PageHeader{
+			Title:       "Engines",
+			Description: "This is where you define your source ports.",
+		},
+	}
+
+	tmpl.ExecuteTemplate(w, "engines-page", &pagedata)
 }
 
 func getIWADsPage(w http.ResponseWriter, r *http.Request) {
 	slog.Info("Getting IWADs")
 
-	tmpl.ExecuteTemplate(w, "iwads-page", nil)
+	pagedata := struct {
+		Header PageHeader
+		IWADs  []IWADDef
+	}{
+		Header: PageHeader{
+			Title:       "IWADs",
+			Description: "Set the location of base game content.",
+		},
+		IWADs: []IWADDef{},
+	}
+
+	tmpl.ExecuteTemplate(w, "iwads-page", &pagedata)
 }

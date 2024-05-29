@@ -1,19 +1,29 @@
+* {
+    font-family:'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+    font-weight: 400;
+    font-size: 14pt;
+}
+
+h1 {
+    font-weight: 600;
+    font-size: 20pt;
+}
+
 #app {
     display: flex;
     flex-direction: row;
     align-items: stretch;
 }
 
-#side-nav {
-    height: 100vh;
+#navbar {
     min-width: 280px;
-    padding: 0 14px;
+    padding: 0 12px;
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-#side-nav button {
+#navbar button {
     border: none;
     color: white;
     background-color: transparent;
@@ -21,16 +31,87 @@
     text-wrap: nowrap;
     padding: 10px;
     border-radius: 4px;
+    font-size: 10pt;
 }
 
-#side-nav button:hover {
-    background: rgba(255, 255, 255, 0.2);
-}
-
-#side-nav .selected {
+#navbar button:hover {
     background: rgba(255, 255, 255, 0.1);
+}
+
+#navbar button:active {
+    background: rgba(255, 255, 255, 0.05);
+}
+
+#navbar .selected {
+    background: rgba(255, 255, 255, 0.05);
 }
 
 #main-content {
     color: white;
+    padding: 0 12px;
+    flex-grow: 1;
+}
+
+#main-content button {
+    background-color: deepskyblue;
+    border: 0;
+    border-radius: 4px;
+    min-width: 130px;
+    padding: 8px;
+    font-size: 10pt;
+}
+
+#main-content button:hover {
+    background-color: skyblue;
+}
+
+#main-content button:active {
+    background-color: deepskyblue;
+}
+
+#main-content-header p {
+    font-size: 10pt;
+    color: darkgray;
+}
+
+#iwad-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#iwad-list>p {
+    margin-bottom: 10px;
+    font-size: 10pt;
+}
+
+.iwad-item {
+    background: rgba(255, 255, 255, 0.05);
+    border-radius: 4px;
+    padding: 14px;
+}
+
+.iwad-adder {
+    padding: 16px 14px;
+}
+
+.iwad-adder>.iwad-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+.iwad-info p {
+    margin: 0;
+}
+
+.iwad-title {
+    font-size: 12pt;
+    font-weight: 300;
+}
+
+.iwad-description {
+    font-size: 9pt;
+    color: darkgray;
 }
