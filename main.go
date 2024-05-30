@@ -56,7 +56,7 @@ func main() {
 			},
 		},
 		Windows: &windows.Options{
-			BackdropType:         windows.Tabbed,
+			BackdropType:         windows.Mica,
 			WebviewIsTransparent: true,
 			WindowIsTranslucent:  true,
 		},
