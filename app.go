@@ -5,6 +5,7 @@ import (
 	"embed"
 	"fmt"
 	"html/template"
+	"log"
 	"log/slog"
 	"net/http"
 
@@ -65,7 +66,10 @@ func (a *App) Greet(name string) string {
 func render(w http.ResponseWriter, name string, data any) {
 	tmpl := template.Must(baseTmpl.Clone())
 	tmpl = template.Must(tmpl.ParseFS(tmplFS, "templates/"+name))
-	tmpl.ExecuteTemplate(w, name, data)
+	err := tmpl.ExecuteTemplate(w, name, data)
+	if err != nil {
+		log.Fatal("error rendering template", err)
+	}
 }
 
 func getHomePage(w http.ResponseWriter, r *http.Request) {

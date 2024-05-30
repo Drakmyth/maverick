@@ -1,5 +1,6 @@
 {{template "navbar" "engines"}}
-<div id="main-content">
-    {{template "main-content-header" .Header}}
+{{template "main-content" .}}
+
+{{define "page-content"}}
     <span>Engines page content goes here...</span>
-</div>
+{{end}}

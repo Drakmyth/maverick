@@ -1,5 +1,6 @@
 {{template "navbar" "home"}}
-<div id="main-content">
-    {{template "main-content-header" .Header}}
+{{template "main-content" .}}
+
+{{define "page-content"}}
     <span>Home page content goes here...</span>
-</div>
+{{end}}

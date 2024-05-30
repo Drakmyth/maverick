@@ -1,24 +1,26 @@
 {{template "navbar" "iwads"}}
-<div id="main-content">
-    {{template "main-content-header" .Header}}
-    <div id="iwad-list">
-        <p>Wads</p>
-        <div class="iwad-item iwad-adder">
-            <div class="iwad-info">
-                <p class="iwad-title">Add a new IWAD</p>
-                <button onmousedown="openAddIWADModal()">Add</button>
-            </div>
+{{template "main-content" .}}
+
+{{define "page-content"}}
+<div id="iwad-list">
+    <p>Wads</p>
+    <div class="iwad-item iwad-adder">
+        <div class="iwad-info">
+            <p class="iwad-title">Add a new IWAD</p>
+            <button onmousedown="openAddIWADModal()">Add</button>
         </div>
-        {{range .IWADs}}
-        <div class="iwad-item">
-            <div class="iwad-info">
-                <p class="iwad-title">{{.Name}}</p>
-                <p class="iwad-description">{{.Path}}</p>
-            </div>
-        </div>
-        {{end}}
     </div>
+    {{range .IWADs}}
+    <div class="iwad-item">
+        <div class="iwad-info">
+            <p class="iwad-title">{{.Name}}</p>
+            <p class="iwad-description">{{.Path}}</p>
+        </div>
+    </div>
+    {{end}}
 </div>
+{{end}}
+
 <div class="modal-cover">
     <div class="modal">
         <h2 class="modal-title">New IWAD</h2>
