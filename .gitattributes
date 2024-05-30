@@ -14,7 +14,7 @@
 *.md5      text
 *.mod      text eol=lf
 *.nsi      text
-*.plist    text
+*.plist    text eol=lf
 *.sum      text eol=lf
 *.toml     text
 *.ts       text
