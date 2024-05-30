@@ -1,0 +1,9 @@
+{{define "modal"}}
+<div class="modal-cover">
+    <div class="modal">
+        <h2 class="modal-title">{{block "modal-title" .}}{{end}}</h2>
+        <div class="modal-content">{{block "modal-content" .}}{{end}}</div>
+        <div class="modal-buttons">{{block "modal-buttons" .}}{{end}}</div>
+    </div>
+</div>
+{{end}}
