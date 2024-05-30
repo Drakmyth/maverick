@@ -2,9 +2,9 @@ package main
 
 import (
 	"context"
+	"embed"
 	"fmt"
 	"html/template"
-	"log"
 	"log/slog"
 	"net/http"
 
@@ -27,7 +27,10 @@ type App struct {
 	router *chi.Mux
 }
 
-var tmpl *template.Template = nil
+//go:embed templates/*.tmpl.html
+var tmplFS embed.FS
+
+var baseTmpl *template.Template = nil
 
 func (a *App) middleware(next http.Handler) http.Handler {
 	a.router.NotFound(next.ServeHTTP)
@@ -41,11 +44,7 @@ func NewApp() *App {
 	r.Get("/engines", getEnginesPage)
 	r.Get("/iwads", getIWADsPage)
 
-	var err error = nil
-	tmpl, err = template.ParseGlob("./templates/*.tmpl.html")
-	if err != nil {
-		log.Fatal("Error loading templates:" + err.Error())
-	}
+	baseTmpl = template.Must(template.ParseFS(tmplFS, "templates/*.tmpl.html"))
 
 	return &App{
 		router: r,
@@ -63,6 +62,12 @@ func (a *App) Greet(name string) string {
 	return fmt.Sprintf("Hello %s, It's show time!", name)
 }
 
+func render(w http.ResponseWriter, name string, data any) {
+	tmpl := template.Must(baseTmpl.Clone())
+	tmpl = template.Must(tmpl.ParseFS(tmplFS, "templates/"+name))
+	tmpl.ExecuteTemplate(w, name, data)
+}
+
 func getHomePage(w http.ResponseWriter, r *http.Request) {
 	slog.Info("Getting Home")
 
@@ -75,7 +80,7 @@ func getHomePage(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	tmpl.ExecuteTemplate(w, "home-page", &pagedata)
+	render(w, "home-page.tmpl.html", &pagedata)
 }
 
 func getEnginesPage(w http.ResponseWriter, r *http.Request) {
@@ -90,7 +95,7 @@ func getEnginesPage(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	tmpl.ExecuteTemplate(w, "engines-page", &pagedata)
+	render(w, "engines-page.tmpl.html", &pagedata)
 }
 
 func getIWADsPage(w http.ResponseWriter, r *http.Request) {
@@ -107,5 +112,5 @@ func getIWADsPage(w http.ResponseWriter, r *http.Request) {
 		IWADs: []IWADDef{},
 	}
 
-	tmpl.ExecuteTemplate(w, "iwads-page", &pagedata)
+	render(w, "iwads-page.tmpl.html", &pagedata)
 }
