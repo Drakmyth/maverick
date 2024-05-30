@@ -140,6 +140,10 @@ label {
     color: darkgray;
 }
 
+.show-modal {
+    display: block !important;
+}
+
 .modal-cover {
     display: none;
     position: fixed;
