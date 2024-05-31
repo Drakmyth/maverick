@@ -4,10 +4,7 @@ go 1.21
 
 toolchain go1.22.2
 
-require (
-	github.com/go-chi/chi/v5 v5.0.12
-	github.com/wailsapp/wails/v2 v2.8.2
-)
+require github.com/wailsapp/wails/v2 v2.8.2
 
 require (
 	github.com/bep/debounce v1.2.1 // indirect

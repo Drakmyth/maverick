@@ -1,15 +1,13 @@
 package main
 
 import (
+	"bytes"
 	"context"
 	"embed"
-	"fmt"
 	"html/template"
+	"io"
 	"log"
 	"log/slog"
-	"net/http"
-
-	"github.com/go-chi/chi/v5"
 )
 
 type PageHeader struct {
@@ -24,8 +22,7 @@ type IWADDef struct {
 
 // App struct
 type App struct {
-	ctx    context.Context
-	router *chi.Mux
+	ctx context.Context
 }
 
 //go:embed templates/*.tmpl.html
@@ -33,23 +30,11 @@ var tmplFS embed.FS
 
 var baseTmpl *template.Template = nil
 
-func (a *App) middleware(next http.Handler) http.Handler {
-	a.router.NotFound(next.ServeHTTP)
-	return a.router
-}
-
 // NewApp creates a new App application struct
 func NewApp() *App {
-	r := chi.NewRouter()
-	r.Get("/home", getHomePage)
-	r.Get("/engines", getEnginesPage)
-	r.Get("/iwads", getIWADsPage)
-
 	baseTmpl = template.Must(template.ParseFS(tmplFS, "templates/*.tmpl.html"))
 
-	return &App{
-		router: r,
-	}
+	return &App{}
 }
 
 // startup is called when the app starts. The context is saved
@@ -58,12 +43,7 @@ func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
 }
 
-// Greet returns a greeting for the given name
-func (a *App) Greet(name string) string {
-	return fmt.Sprintf("Hello %s, It's show time!", name)
-}
-
-func render(w http.ResponseWriter, name string, data any) {
+func render(w io.Writer, name string, data any) {
 	tmpl := template.Must(baseTmpl.Clone())
 	tmpl = template.Must(tmpl.ParseFS(tmplFS, "templates/"+name))
 	err := tmpl.ExecuteTemplate(w, name, data)
@@ -72,7 +52,7 @@ func render(w http.ResponseWriter, name string, data any) {
 	}
 }
 
-func getHomePage(w http.ResponseWriter, r *http.Request) {
+func (a *App) GetHomePage() string {
 	slog.Info("Getting Home")
 
 	pagedata := struct {
@@ -84,10 +64,12 @@ func getHomePage(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	render(w, "home-page.tmpl.html", &pagedata)
+	var tpl bytes.Buffer
+	render(&tpl, "home-page.tmpl.html", &pagedata)
+	return tpl.String()
 }
 
-func getEnginesPage(w http.ResponseWriter, r *http.Request) {
+func (a *App) GetEnginesPage() string {
 	slog.Info("Getting Engines")
 
 	pagedata := struct {
@@ -99,10 +81,12 @@ func getEnginesPage(w http.ResponseWriter, r *http.Request) {
 		},
 	}
 
-	render(w, "engines-page.tmpl.html", &pagedata)
+	var tpl bytes.Buffer
+	render(&tpl, "engines-page.tmpl.html", &pagedata)
+	return tpl.String()
 }
 
-func getIWADsPage(w http.ResponseWriter, r *http.Request) {
+func (a *App) GetIWADsPage() string {
 	slog.Info("Getting IWADs")
 
 	pagedata := struct {
@@ -116,5 +100,7 @@ func getIWADsPage(w http.ResponseWriter, r *http.Request) {
 		IWADs: []IWADDef{},
 	}
 
-	render(w, "iwads-page.tmpl.html", &pagedata)
+	var tpl bytes.Buffer
+	render(&tpl, "iwads-page.tmpl.html", &pagedata)
+	return tpl.String()
 }

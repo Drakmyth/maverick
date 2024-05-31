@@ -22,8 +22,7 @@ func main() {
 		Width:  1024,
 		Height: 768,
 		AssetServer: &assetserver.Options{
-			Assets:     assets,
-			Middleware: app.middleware,
+			Assets: assets,
 		},
 		Windows: &windows.Options{
 			BackdropType:         windows.Mica,

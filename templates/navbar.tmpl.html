@@ -3,27 +3,24 @@
     <button
         id="nav-home"
         type="button"
-        hx-get="/home"
-        hx-target="#app"
         {{if eq . "home"}}class="selected"{{end}}
+        onmousedown="navigateToHome()"
     >
         🏠 Home
     </button>
     <button
         id="nav-engines"
         type="button"
-        hx-get="/engines"
-        hx-target="#app"
         {{if eq . "engines"}}class="selected"{{end}}
+        onmousedown="navigateToEngines()"
     >
         💻 Engines
     </button>
     <button
         id="nav-iwads"
         type="button"
-        hx-get="/iwads"
-        hx-target="#app"
         {{if eq . "iwads"}}class="selected"{{end}}
+        onmousedown="navigateToIWADs()"
     >
         🎮 IWADs
     </button>
