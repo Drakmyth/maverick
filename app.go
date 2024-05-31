@@ -4,10 +4,14 @@ import (
 	"bytes"
 	"context"
 	"embed"
+	"encoding/json"
+	"errors"
 	"html/template"
 	"io"
-	"log"
+	"io/fs"
 	"log/slog"
+	"os"
+	"path/filepath"
 
 	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
@@ -22,9 +26,14 @@ type IWADDef struct {
 	Path string
 }
 
+type IWADsConfig struct {
+	IWADs []IWADDef
+}
+
 // App struct
 type App struct {
-	ctx context.Context
+	ctx   context.Context
+	iwads []IWADDef
 }
 
 //go:embed templates/*.tmpl.html
@@ -43,15 +52,71 @@ func NewApp() *App {
 // so we can call the runtime methods
 func (a *App) startup(ctx context.Context) {
 	a.ctx = ctx
+	a.iwads = loadIWADs()
+}
+
+func getOrCreateConfigDir() (string, error) {
+	configDir, err := os.UserConfigDir()
+	if err != nil {
+		return "", err
+	}
+
+	configDir = filepath.Join(configDir, "Maverick Launcher")
+	err = os.MkdirAll(configDir, 0644)
+	if err != nil {
+		return configDir, err
+	}
+
+	return configDir, nil
+}
+
+func loadIWADs() []IWADDef {
+	configDir, err := getOrCreateConfigDir()
+	check(err)
+
+	iwadConfigFilePath := filepath.Join(configDir, "iwads.json")
+	data, err := os.ReadFile(iwadConfigFilePath)
+	if err != nil {
+		if errors.Is(err, fs.ErrNotExist) {
+			createIWADConfigFile()
+			return []IWADDef{}
+		} else {
+			panic(err)
+		}
+	}
+
+	var config IWADsConfig
+	err = json.Unmarshal(data, &config)
+	check(err)
+
+	return config.IWADs
+}
+
+func createIWADConfigFile() {
+	config := IWADsConfig{
+		IWADs: []IWADDef{},
+	}
+
+	data, err := json.Marshal(config)
+	check(err)
+
+	configDir, err := getOrCreateConfigDir()
+	check(err)
+
+	iwadConfigFilePath := filepath.Join(configDir, "iwads.json")
+	f, err := os.Create(iwadConfigFilePath)
+	check(err)
+	defer f.Close()
+
+	_, err = f.Write(data)
+	check(err)
 }
 
 func render(w io.Writer, name string, data any) {
 	tmpl := template.Must(baseTmpl.Clone())
 	tmpl = template.Must(tmpl.ParseFS(tmplFS, "templates/"+name))
 	err := tmpl.ExecuteTemplate(w, name, data)
-	if err != nil {
-		log.Fatal("error rendering template", err)
-	}
+	check(err)
 }
 
 func (a *App) GetHomePage() string {
@@ -122,13 +187,17 @@ func (a *App) SelectIWADFile() string {
 	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
 		Title: "Select IWAD",
 	})
+	check(err)
 
-	if err != nil {
-		panic(err)
-	}
 	return path
 }
 
 func (a *App) SaveIWAD(iwad IWADDef) {
 	print("TODO: Go - Implement IWAD Save", iwad.Name, iwad.Path)
+}
+
+func check(err error) {
+	if err != nil {
+		panic(err)
+	}
 }
