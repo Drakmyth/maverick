@@ -1,7 +1,3 @@
-{{template "navbar" "iwads"}}
-{{template "main-content" .}}
-
-{{define "page-content"}}
 <div id="iwad-list">
     <p>Wads</p>
     <div class="iwad-item iwad-adder">
@@ -19,7 +15,7 @@
     </div>
     {{end}}
 </div>
-{{end}}
+
 {{template "modal" .}}
 
 {{define "modal-title"}}New IWAD{{end}}

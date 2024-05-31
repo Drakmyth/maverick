@@ -55,34 +55,16 @@ func render(w io.Writer, name string, data any) {
 func (a *App) GetHomePage() string {
 	slog.Info("Getting Home")
 
-	pagedata := struct {
-		Header PageHeader
-	}{
-		Header: PageHeader{
-			Title:       "Home",
-			Description: "This is your new home.",
-		},
-	}
-
 	var tpl bytes.Buffer
-	render(&tpl, "home-page.tmpl.html", &pagedata)
+	render(&tpl, "home-page.tmpl.html", nil)
 	return tpl.String()
 }
 
 func (a *App) GetEnginesPage() string {
 	slog.Info("Getting Engines")
 
-	pagedata := struct {
-		Header PageHeader
-	}{
-		Header: PageHeader{
-			Title:       "Engines",
-			Description: "This is where you define your source ports.",
-		},
-	}
-
 	var tpl bytes.Buffer
-	render(&tpl, "engines-page.tmpl.html", &pagedata)
+	render(&tpl, "engines-page.tmpl.html", nil)
 	return tpl.String()
 }
 
@@ -90,17 +72,38 @@ func (a *App) GetIWADsPage() string {
 	slog.Info("Getting IWADs")
 
 	pagedata := struct {
-		Header PageHeader
-		IWADs  []IWADDef
+		IWADs []IWADDef
 	}{
-		Header: PageHeader{
-			Title:       "IWADs",
-			Description: "Set the location of base game content.",
-		},
 		IWADs: []IWADDef{},
 	}
 
 	var tpl bytes.Buffer
 	render(&tpl, "iwads-page.tmpl.html", &pagedata)
 	return tpl.String()
+}
+
+func (a *App) GetPageTitle(page string) string {
+	switch page {
+	case "home":
+		return "Home"
+	case "engines":
+		return "Engines"
+	case "iwads":
+		return "IWADs"
+	}
+
+	return ""
+}
+
+func (a *App) GetPageDescription(page string) string {
+	switch page {
+	case "home":
+		return "This is your new home."
+	case "engines":
+		return "This is where you define your source ports."
+	case "iwads":
+		return "Set the location of base game content."
+	}
+
+	return ""
 }
