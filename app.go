@@ -68,6 +68,14 @@ func (a *App) GetEnginesPage() string {
 	return tpl.String()
 }
 
+func (a *App) GetAddIWADModal() string {
+	slog.Info("Getting Add IWAD Modal")
+
+	var tpl bytes.Buffer
+	render(&tpl, "add-iwad-modal.tmpl.html", nil)
+	return tpl.String()
+}
+
 func (a *App) GetIWADsPage() string {
 	slog.Info("Getting IWADs")
 

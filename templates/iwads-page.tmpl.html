@@ -15,22 +15,3 @@
     </div>
     {{end}}
 </div>
-
-{{template "modal" .}}
-
-{{define "modal-title"}}New IWAD{{end}}
-
-{{define "modal-content"}}
-<label for="iwad-name-txt">Name</label>
-<input id="iwad-name-txt" type="text" />
-<label for="iwad-file-txt">File</label>
-<div id="iwad-file-txt-wrapper">
-    <input id="iwad-file-txt" type="text" />
-    <button type="button">Choose file...</button>
-</div>
-{{end}}
-
-{{define "modal-buttons"}}
-<button type="button" disabled>Create</button>
-<button type="button" onmousedown="closeAddIWADModal()">Cancel</button>
-{{end}}

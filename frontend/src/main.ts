@@ -6,6 +6,7 @@ import {
     GetIWADsPage,
     GetPageTitle,
     GetPageDescription,
+    GetAddIWADModal,
 } from "../wailsjs/go/main/App";
 
 declare global {
@@ -17,33 +18,42 @@ declare global {
     }
 }
 
-window.openAddIWADModal = function () {
-    let openIWADModalCover = document.getElementsByClassName(
+window.openAddIWADModal = async function () {
+    let openIWADModalCover = document.getElementById(
         "modal-cover"
-    )[0] as HTMLDivElement;
+    ) as HTMLDivElement;
+    let modal = document.getElementById("modal") as HTMLDivElement;
+
     openIWADModalCover.classList.add("show-modal");
+    modal.innerHTML = await GetAddIWADModal()
 };
 
 window.closeAddIWADModal = function () {
-    let openIWADModalCover = document.getElementsByClassName(
+    let openIWADModalCover = document.getElementById(
         "modal-cover"
-    )[0] as HTMLDivElement;
+    ) as HTMLDivElement;
     openIWADModalCover.classList.remove("show-modal");
 };
 
 window.navigateTo = async function (page: string) {
     let appDiv = document.getElementById("page-content") as HTMLDivElement;
-    let navButtons = (document.getElementById("navbar") as HTMLDivElement).getElementsByTagName("button")
-    let pageTitleHeading = document.getElementById("page-title") as HTMLHeadingElement;
-    let pageDescriptionParagraph = document.getElementById("page-description") as HTMLParagraphElement;
+    let navButtons = (
+        document.getElementById("navbar") as HTMLDivElement
+    ).getElementsByTagName("button");
+    let pageTitleHeading = document.getElementById(
+        "page-title"
+    ) as HTMLHeadingElement;
+    let pageDescriptionParagraph = document.getElementById(
+        "page-description"
+    ) as HTMLParagraphElement;
 
-    Array.from(navButtons).forEach(btn => {
+    Array.from(navButtons).forEach((btn) => {
         if (btn.id === `nav-${page}`) {
             btn.classList.add("selected");
         } else {
             btn.classList.remove("selected");
         }
-    })
+    });
 
     pageTitleHeading.innerText = await GetPageTitle(page);
     pageDescriptionParagraph.innerText = await GetPageDescription(page);
