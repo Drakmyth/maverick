@@ -25,14 +25,17 @@ window.openAddIWADModal = async function () {
     let modal = document.getElementById("modal") as HTMLDivElement;
 
     openIWADModalCover.classList.add("show-modal");
-    modal.innerHTML = await GetAddIWADModal()
+    modal.innerHTML = await GetAddIWADModal();
 };
 
 window.closeAddIWADModal = function () {
     let openIWADModalCover = document.getElementById(
         "modal-cover"
     ) as HTMLDivElement;
+    let modal = document.getElementById("modal") as HTMLDivElement;
+
     openIWADModalCover.classList.remove("show-modal");
+    modal.innerHTML = "";
 };
 
 window.navigateTo = async function (page: string) {
