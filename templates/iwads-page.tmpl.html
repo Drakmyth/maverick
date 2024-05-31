@@ -1,6 +1,6 @@
 <div id="iwad-list">
     <p>Wads</p>
-    <div class="iwad-item iwad-adder">
+    <div id="iwad-adder" class="iwad-item">
         <div class="iwad-info">
             <p class="iwad-title">Add a new IWAD</p>
             <button onmousedown="openAddIWADModal()">Add</button>
@@ -12,6 +12,7 @@
             <p class="iwad-title">{{.Name}}</p>
             <p class="iwad-description">{{.Path}}</p>
         </div>
+        <button type="button" title="More options">...</button>
     </div>
     {{end}}
 </div>
