@@ -78,8 +78,9 @@ func loadIWADs() []IWADDef {
 	data, err := os.ReadFile(iwadConfigFilePath)
 	if err != nil {
 		if errors.Is(err, fs.ErrNotExist) {
-			createIWADConfigFile()
-			return []IWADDef{}
+			iwads := []IWADDef{}
+			saveIWADsToConfig(iwads)
+			return iwads
 		} else {
 			panic(err)
 		}
@@ -90,26 +91,6 @@ func loadIWADs() []IWADDef {
 	check(err)
 
 	return config.IWADs
-}
-
-func createIWADConfigFile() {
-	config := IWADsConfig{
-		IWADs: []IWADDef{},
-	}
-
-	data, err := json.Marshal(config)
-	check(err)
-
-	configDir, err := getOrCreateConfigDir()
-	check(err)
-
-	iwadConfigFilePath := filepath.Join(configDir, "iwads.json")
-	f, err := os.Create(iwadConfigFilePath)
-	check(err)
-	defer f.Close()
-
-	_, err = f.Write(data)
-	check(err)
 }
 
 func render(w io.Writer, name string, data any) {
@@ -149,7 +130,7 @@ func (a *App) GetIWADsPage() string {
 	pagedata := struct {
 		IWADs []IWADDef
 	}{
-		IWADs: []IWADDef{},
+		IWADs: a.iwads,
 	}
 
 	var tpl bytes.Buffer
@@ -193,7 +174,28 @@ func (a *App) SelectIWADFile() string {
 }
 
 func (a *App) SaveIWAD(iwad IWADDef) {
-	print("TODO: Go - Implement IWAD Save", iwad.Name, iwad.Path)
+	a.iwads = append(a.iwads, iwad)
+	saveIWADsToConfig(a.iwads)
+}
+
+func saveIWADsToConfig(iwads []IWADDef) {
+	config := IWADsConfig{
+		IWADs: iwads,
+	}
+
+	data, err := json.Marshal(config)
+	check(err)
+
+	configDir, err := getOrCreateConfigDir()
+	check(err)
+
+	iwadConfigFilePath := filepath.Join(configDir, "iwads.json")
+	f, err := os.Create(iwadConfigFilePath)
+	check(err)
+	defer f.Close()
+
+	_, err = f.Write(data)
+	check(err)
 }
 
 func check(err error) {
