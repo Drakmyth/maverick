@@ -29,6 +29,23 @@ label {
     font-size: 14pt;
 }
 
+button {
+    background-color: deepskyblue;
+    border: 0;
+    border-radius: 4px;
+    min-width: 130px;
+    padding: 8px;
+    font-size: 10pt;
+}
+
+button:hover {
+    background-color: skyblue;
+}
+
+button:active {
+    background-color: deepskyblue;
+}
+
 #app {
     display: flex;
     flex-direction: row;
@@ -78,23 +95,6 @@ label {
 #page-description {
     font-size: 10pt;
     color: darkgray;
-}
-
-#page-content button {
-    background-color: deepskyblue;
-    border: 0;
-    border-radius: 4px;
-    min-width: 130px;
-    padding: 8px;
-    font-size: 10pt;
-}
-
-#page-content button:hover {
-    background-color: skyblue;
-}
-
-#page-content button:active {
-    background-color: deepskyblue;
 }
 
 #iwad-list {
@@ -232,21 +232,4 @@ label {
 
 #iwad-file-txt {
     font-size: 14px;
-}
-
-#iwad-file-txt-wrapper button {
-    background-color: deepskyblue;
-    border: 0;
-    border-radius: 4px;
-    min-width: 130px;
-    padding: 8px;
-    font-size: 10pt;
-}
-
-#iwad-file-txt-wrapper button:hover {
-    background-color: skyblue;
-}
-
-#iwad-file-txt-wrapper button:active {
-    background-color: deepskyblue;
 }

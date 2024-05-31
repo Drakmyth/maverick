@@ -7,6 +7,8 @@ import {
     GetPageTitle,
     GetPageDescription,
     GetAddIWADModal,
+    SelectIWADFile,
+    SaveIWAD,
 } from "../wailsjs/go/main/App";
 
 declare global {
@@ -15,13 +17,14 @@ declare global {
         closeAddIWADModal: () => void;
         navigateTo: (page: string) => void;
         mavInit: () => void;
+        selectIWADFile: () => void;
+        validateAddIWADForm: () => void;
+        submitAddIWADForm: (event: SubmitEvent) => void;
     }
 }
 
 window.openAddIWADModal = async function () {
-    let openIWADModalCover = document.getElementById(
-        "modal-cover"
-    ) as HTMLDivElement;
+    let openIWADModalCover = document.getElementById("modal-cover") as HTMLDivElement;
     let modal = document.getElementById("modal") as HTMLDivElement;
 
     openIWADModalCover.classList.add("show-modal");
@@ -29,9 +32,7 @@ window.openAddIWADModal = async function () {
 };
 
 window.closeAddIWADModal = function () {
-    let openIWADModalCover = document.getElementById(
-        "modal-cover"
-    ) as HTMLDivElement;
+    let openIWADModalCover = document.getElementById("modal-cover") as HTMLDivElement;
     let modal = document.getElementById("modal") as HTMLDivElement;
 
     openIWADModalCover.classList.remove("show-modal");
@@ -40,15 +41,9 @@ window.closeAddIWADModal = function () {
 
 window.navigateTo = async function (page: string) {
     let appDiv = document.getElementById("page-content") as HTMLDivElement;
-    let navButtons = (
-        document.getElementById("navbar") as HTMLDivElement
-    ).getElementsByTagName("button");
-    let pageTitleHeading = document.getElementById(
-        "page-title"
-    ) as HTMLHeadingElement;
-    let pageDescriptionParagraph = document.getElementById(
-        "page-description"
-    ) as HTMLParagraphElement;
+    let navButtons = (document.getElementById("navbar") as HTMLDivElement).getElementsByTagName("button");
+    let pageTitleHeading = document.getElementById("page-title") as HTMLHeadingElement;
+    let pageDescriptionParagraph = document.getElementById("page-description") as HTMLParagraphElement;
 
     Array.from(navButtons).forEach((btn) => {
         if (btn.id === `nav-${page}`) {
@@ -76,4 +71,34 @@ window.navigateTo = async function (page: string) {
 
 window.mavInit = function () {
     window.navigateTo("home");
+};
+
+window.selectIWADFile = async function () {
+    let pathInput = document.getElementById("iwad-file-txt") as HTMLInputElement;
+    pathInput.value = await SelectIWADFile();
+    window.validateAddIWADForm();
+};
+
+window.validateAddIWADForm = function () {
+    let nameInput = document.getElementById("iwad-name-txt") as HTMLInputElement;
+    let pathInput = document.getElementById("iwad-file-txt") as HTMLInputElement;
+    let submitButton = document.getElementById("iwad-submit") as HTMLButtonElement;
+
+    let valid = Boolean(nameInput.value.trim()) && Boolean(pathInput.value.trim());
+    submitButton.disabled = !valid;
+};
+
+window.submitAddIWADForm = async function (event: SubmitEvent) {
+    event.preventDefault();
+
+    let nameInput = document.getElementById("iwad-name-txt") as HTMLInputElement;
+    let pathInput = document.getElementById("iwad-file-txt") as HTMLInputElement;
+
+    await SaveIWAD({
+        Name: nameInput.value,
+        Path: pathInput.value,
+    });
+
+    window.closeAddIWADModal();
+    window.navigateTo("iwads");
 };

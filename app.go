@@ -8,6 +8,8 @@ import (
 	"io"
 	"log"
 	"log/slog"
+
+	"github.com/wailsapp/wails/v2/pkg/runtime"
 )
 
 type PageHeader struct {
@@ -114,4 +116,19 @@ func (a *App) GetPageDescription(page string) string {
 	}
 
 	return ""
+}
+
+func (a *App) SelectIWADFile() string {
+	path, err := runtime.OpenFileDialog(a.ctx, runtime.OpenDialogOptions{
+		Title: "Select IWAD",
+	})
+
+	if err != nil {
+		panic(err)
+	}
+	return path
+}
+
+func (a *App) SaveIWAD(iwad IWADDef) {
+	print("TODO: Go - Implement IWAD Save", iwad.Name, iwad.Path)
 }
