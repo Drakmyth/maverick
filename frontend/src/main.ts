@@ -1,5 +1,4 @@
 import "./style.css";
-import "./app.css";
 
 import {
     GetHomePage,
