@@ -93,6 +93,14 @@ button:active {
     height: 99vh;
 }
 
+/* Until backdrop-filter is fixed we can't hide the underlying content */
+/* See https://github.com/wailsapp/wails/issues/2340 */
+/* #main-content header {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(10px);
+} */
+
 #page-description {
     font-size: 10pt;
     color: darkgray;
@@ -173,6 +181,8 @@ button:active {
 #add-iwad-dialog {
     padding: 0;
     color: white;
+    /* Background should be transparent, but until backdrop-filter is fixed we can't hide the underlying content */
+    /* See https://github.com/wailsapp/wails/issues/2340 */
     background-color: #2b2b2b;
     border: 1px solid #393939;
     width: 36%;
@@ -181,6 +191,28 @@ button:active {
 
 #add-iwad-dialog::backdrop {
     background-color: rgba(0, 0, 0, 0.3);
+}
+
+#iwad-options-modal {
+    padding: 4px;
+    display: flex;
+    flex-direction: column;
+    /* Background should be transparent, but until backdrop-filter is fixed we can't hide the underlying content */
+    /* See https://github.com/wailsapp/wails/issues/2340 */
+    background-color: #2b2b2b;
+    border: 1px solid #393939;
+    border-radius: 8px;
+    gap: 4px;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.5);
+}
+
+#iwad-options-modal::backdrop {
+    background: transparent;
+}
+
+#iwad-options-modal button {
+    background: rgba(255, 255, 255, 0.07);
+    color: white;
 }
 
 .modal-content,
@@ -200,7 +232,7 @@ button:active {
 }
 
 .modal-buttons {
-    background-color: #202020;
+    background-color: rgba(0, 0, 0, 0.25);
     padding: 20px;
     display: flex;
     flex-direction: row;
@@ -208,7 +240,7 @@ button:active {
 }
 
 .modal-buttons button {
-    background-color: #2b2b2b;
+    background-color: rgba(255, 255, 255, 0.05);
     border: 0;
     border-radius: 4px;
     min-width: 130px;
@@ -219,26 +251,32 @@ button:active {
 }
 
 .modal-buttons button:hover {
-    background-color: #323232;
+    background: rgba(255, 255, 255, 0.075);
 }
 
 .modal-buttons button:active {
-    background-color: #2b2b2b;
+    background: rgba(255, 255, 255, 0.05);
 }
 
 .modal-buttons button:disabled {
-    background-color: #2a2a2a;
+    background: rgba(255, 255, 255, 0.05);
     color: #6d6d6d;
 }
 
 .modal-content input[type="text"] {
-    background-color: #3c3c3c;
+    background: rgba(255, 255, 255, 0.075);
     color: white;
     font-size: 14px;
     padding: 0.25em 0.5em;
     border: 2px solid #3a3a3a;
     border-bottom: 1px solid #9f9f9f;
     border-radius: 8px;
+    font-size: 14px;
+    flex-grow: 1;
+}
+
+.modal-content input[type="text"]:focus {
+    background: rgba(0, 0, 0, 0.2);
 }
 
 #iwad-file-txt-wrapper {
@@ -260,12 +298,6 @@ button:active {
     background-color: transparent;
 }
 
-#iwad-name-txt:focus {
-    background-color: #222222;
-}
-
 #iwad-file-txt {
-    font-size: 14px;
-    flex-grow: 1;
     margin: 0;
 }
