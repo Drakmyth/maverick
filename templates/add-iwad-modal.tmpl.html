@@ -1,16 +1,18 @@
-<h2 class="modal-title">New IWAD</h2>
-<form autocomplete="off" onsubmit="submitAddIWADForm(event)">
-    <div class="modal-content">
-        <label for="iwad-name-txt">Name</label>
-        <input id="iwad-name-txt" type="text" oninput="validateAddIWADForm()" />
-        <label for="iwad-file-txt">File</label>
-        <div id="iwad-file-txt-wrapper">
-            <input id="iwad-file-txt" type="text" oninput="validateAddIWADForm()" />
-            <button type="button" title="Choose file" onmousedown="selectIWADFile()">📂</button>
+<dialog id="add-iwad-dialog">
+    <h2 class="modal-title">New IWAD</h2>
+    <form autocomplete="off" onsubmit="submitAddIWADForm(event)">
+        <div class="modal-content">
+            <label for="iwad-name-txt">Name</label>
+            <input id="iwad-name-txt" type="text" oninput="validateAddIWADForm()" />
+            <label for="iwad-file-txt">File</label>
+            <div id="iwad-file-txt-wrapper">
+                <input id="iwad-file-txt" type="text" oninput="validateAddIWADForm()" />
+                <button type="button" title="Choose file" onmousedown="selectIWADFile()">📂</button>
+            </div>
         </div>
-    </div>
-    <div class="modal-buttons">
-        <button id="iwad-submit" type="submit" disabled>Create</button>
-        <button type="button" onmousedown="closeAddIWADModal()">Cancel</button>
-    </div>
-</form>
+        <div class="modal-buttons">
+            <button id="iwad-submit" type="submit" disabled>Create</button>
+            <button type="button" onmousedown="closeAddIWADModal()">Cancel</button>
+        </div>
+    </form>
+</dialog>

@@ -24,15 +24,20 @@ declare global {
 }
 
 window.openAddIWADModal = async function () {
-    let dialog = document.getElementById("dialog") as HTMLDialogElement;
-    dialog.innerHTML = await GetAddIWADModal();
+    let template = document.createElement("template");
+    template.innerHTML = await GetAddIWADModal();
+    let dialog = template.content.children[0] as HTMLDialogElement;
+
+    let app = document.getElementById("app") as HTMLDivElement;
+    app.append(dialog);
+
     dialog.showModal();
 };
 
 window.closeAddIWADModal = function () {
-    let dialog = document.getElementById("dialog") as HTMLDialogElement;
+    let dialog = document.getElementById("add-iwad-dialog") as HTMLDialogElement;
     dialog.close();
-    dialog.innerHTML = "";
+    dialog.remove();
 };
 
 window.navigateTo = async function (page: string) {

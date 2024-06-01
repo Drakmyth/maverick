@@ -170,7 +170,7 @@ button:active {
     display: block !important;
 }
 
-#dialog {
+#add-iwad-dialog {
     padding: 0;
     color: white;
     background-color: #2b2b2b;
@@ -179,8 +179,8 @@ button:active {
     border-radius: 8px;
 }
 
-#dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.3)
+#add-iwad-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
 }
 
 .modal-content,
