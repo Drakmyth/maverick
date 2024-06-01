@@ -124,6 +124,14 @@ func (a *App) GetAddIWADModal() string {
 	return tpl.String()
 }
 
+func (a *App) GetIWADOptionsModal() string {
+	slog.Info("Getting IWAD Options Modal")
+
+	var tpl bytes.Buffer
+	render(&tpl, "iwad-options-modal.tmpl.html", nil)
+	return tpl.String()
+}
+
 func (a *App) GetIWADsPage() string {
 	slog.Info("Getting IWADs")
 
