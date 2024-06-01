@@ -24,19 +24,15 @@ declare global {
 }
 
 window.openAddIWADModal = async function () {
-    let openIWADModalCover = document.getElementById("modal-cover") as HTMLDivElement;
-    let modal = document.getElementById("modal") as HTMLDivElement;
-
-    openIWADModalCover.classList.add("show-modal");
-    modal.innerHTML = await GetAddIWADModal();
+    let dialog = document.getElementById("dialog") as HTMLDialogElement;
+    dialog.innerHTML = await GetAddIWADModal();
+    dialog.showModal();
 };
 
 window.closeAddIWADModal = function () {
-    let openIWADModalCover = document.getElementById("modal-cover") as HTMLDivElement;
-    let modal = document.getElementById("modal") as HTMLDivElement;
-
-    openIWADModalCover.classList.remove("show-modal");
-    modal.innerHTML = "";
+    let dialog = document.getElementById("dialog") as HTMLDialogElement;
+    dialog.close();
+    dialog.innerHTML = "";
 };
 
 window.navigateTo = async function (page: string) {
