@@ -1,14 +1,9 @@
 import "./style.css";
 
 import {
-    GetHomePage,
-    GetEnginesPage,
-    GetIWADsPage,
+    GetContent,
     GetPageTitle,
     GetPageDescription,
-    GetAddIWADModal,
-    GetRemoveIWADModal,
-    GetIWADOptionsModal,
     SelectIWADFile,
     SaveIWAD,
 } from "../wailsjs/go/main/App";
@@ -31,7 +26,7 @@ declare global {
 
 window.openAddIWADModal = async function () {
     let template = document.createElement("template");
-    template.innerHTML = await GetAddIWADModal();
+    template.innerHTML = await GetContent("add-iwad-modal");
     let dialog = template.content.children[0] as HTMLDialogElement;
 
     let app = document.getElementById("app") as HTMLDivElement;
@@ -53,7 +48,7 @@ window.openRemoveIWADModal = async function () {
 
 async function onOpenRemoveIWADModal() {
     let template = document.createElement("template");
-    template.innerHTML = await GetRemoveIWADModal();
+    template.innerHTML = await GetContent("remove-iwad-modal");
     let dialog = template.content.children[0] as HTMLDialogElement;
 
     let app = document.getElementById("app") as HTMLDivElement;
@@ -70,7 +65,7 @@ window.closeRemoveIWADModal = function () {
 
 window.openIWADOptionsModal = async function (event: MouseEvent) {
     let template = document.createElement("template");
-    template.innerHTML = await GetIWADOptionsModal();
+    template.innerHTML = await GetContent("iwad-options-modal");
     let dialog = template.content.children[0] as HTMLDialogElement;
     dialog.onmousedown = getDialogCoverClickHandler(dialog, closeIWADOptionsModal);
 
@@ -148,13 +143,13 @@ window.navigateTo = async function (page: string) {
 
     switch (page) {
         case "home":
-            appDiv.innerHTML = await GetHomePage();
+            appDiv.innerHTML = await GetContent("home-page");
             break;
         case "engines":
-            appDiv.innerHTML = await GetEnginesPage();
+            appDiv.innerHTML = await GetContent("engines-page");
             break;
         case "iwads":
-            appDiv.innerHTML = await GetIWADsPage();
+            appDiv.innerHTML = await GetContent("iwads-page");
             break;
     }
 };
