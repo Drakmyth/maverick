@@ -7,6 +7,7 @@ import {
     GetPageTitle,
     GetPageDescription,
     GetAddIWADModal,
+    GetRemoveIWADModal,
     GetIWADOptionsModal,
     SelectIWADFile,
     SaveIWAD,
@@ -16,6 +17,8 @@ declare global {
     interface Window {
         openAddIWADModal: () => void;
         closeAddIWADModal: () => void;
+        openRemoveIWADModal: () => void;
+        closeRemoveIWADModal: () => void;
         openIWADOptionsModal: (event: MouseEvent) => void;
         closeIWADOptionsModal: () => void;
         navigateTo: (page: string) => void;
@@ -39,6 +42,28 @@ window.openAddIWADModal = async function () {
 
 window.closeAddIWADModal = function () {
     let dialog = document.getElementById("add-iwad-dialog") as HTMLDialogElement;
+    dialog.close();
+    dialog.remove();
+};
+
+window.openRemoveIWADModal = async function () {
+    closeIWADOptionsModal();
+    await onOpenRemoveIWADModal();
+};
+
+async function onOpenRemoveIWADModal() {
+    let template = document.createElement("template");
+    template.innerHTML = await GetRemoveIWADModal();
+    let dialog = template.content.children[0] as HTMLDialogElement;
+
+    let app = document.getElementById("app") as HTMLDivElement;
+    app.append(dialog);
+
+    dialog.showModal();
+}
+
+window.closeRemoveIWADModal = function () {
+    let dialog = document.getElementById("remove-iwad-dialog") as HTMLDialogElement;
     dialog.close();
     dialog.remove();
 };

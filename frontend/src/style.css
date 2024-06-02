@@ -228,6 +228,40 @@ button:active {
     background: transparent;
 }
 
+#remove-iwad-dialog {
+    padding: 0;
+    color: white;
+    /* Background should be transparent, but until backdrop-filter is fixed we can't hide the underlying content */
+    /* See https://github.com/wailsapp/wails/issues/2340 */
+    background-color: #2b2b2b;
+    border: 1px solid #393939;
+    width: 36%;
+    border-radius: 8px;
+    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
+}
+
+#remove-iwad-dialog .modal-content>p {
+    font-size: 10pt;
+    color: darkgray;
+    margin-top: 0;
+}
+
+#remove-iwad-dialog::backdrop {
+    background-color: rgba(0, 0, 0, 0.3);
+}
+
+#remove-iwad-dialog #iwad-submit {
+    background-color: darkred;
+}
+
+#remove-iwad-dialog #iwad-submit:hover {
+    background-color: crimson;
+}
+
+#remove-iwad-dialog #iwad-submit:active {
+    background-color: darkred;
+}
+
 .modal-content,
 .modal-title {
     padding: 0 20px;
