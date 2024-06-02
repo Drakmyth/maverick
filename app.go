@@ -99,8 +99,8 @@ func (a *App) SelectIWADFile() string {
 	return path
 }
 
-func (a *App) SaveIWAD(iwad iwads.IWADDefinition) {
-	a.IWADs = append(a.IWADs, iwad)
+func (a *App) SaveIWAD(name string, path string) {
+	a.IWADs = append(a.IWADs, iwads.NewIWAD(name, path))
 	iwadConfigPath := filepath.Join(a.configDirectoryPath, IWAD_CONFIG_FILENAME)
 	a.IWADs.SaveToFile(iwadConfigPath)
 }

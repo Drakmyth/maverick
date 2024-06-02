@@ -3,6 +3,8 @@ package iwads
 import (
 	"encoding/json"
 	"os"
+
+	"github.com/google/uuid"
 )
 
 type IWADCollection []IWADDefinition
@@ -18,7 +20,7 @@ type IWADConfigFile struct {
 
 func NewIWAD(name string, path string) IWADDefinition {
 	return IWADDefinition{
-		Id:   "0",
+		Id:   uuid.NewString(),
 		Name: name,
 		Path: path,
 	}

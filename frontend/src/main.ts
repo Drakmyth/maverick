@@ -179,10 +179,7 @@ window.submitAddIWADForm = async function (event: SubmitEvent) {
     let nameInput = document.getElementById("iwad-name-txt") as HTMLInputElement;
     let pathInput = document.getElementById("iwad-file-txt") as HTMLInputElement;
 
-    await SaveIWAD({
-        Name: nameInput.value,
-        Path: pathInput.value,
-    });
+    await SaveIWAD(nameInput.value, pathInput.value);
 
     window.closeAddIWADModal();
     window.navigateTo("iwads");
