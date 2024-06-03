@@ -1,56 +1,15 @@
-* {
-    font-family: "Segoe UI", Tahoma, Geneva, Verdana, sans-serif;
-    font-weight: 400;
-    font-size: 14pt;
-    user-select: none;
-}
-
-*,
-*::before,
-*::after {
-    box-sizing: border-box;
-}
-
-html {
-    overflow: hidden;
-}
-
-h1 {
-    font-weight: 600;
-    font-size: 20pt;
-}
-
-h2 {
-    font-weight: 600;
-    font-size: 16pt;
-}
-
-label {
-    font-weight: 500;
-    font-size: 14pt;
-}
-
-button {
-    background-color: deepskyblue;
-    border: 0;
-    border-radius: 4px;
-    min-width: 130px;
-    padding: 8px;
-    font-size: 10pt;
-}
-
-button:hover {
-    background-color: skyblue;
-}
-
-button:active {
-    background-color: deepskyblue;
-}
-
 #app {
     display: flex;
     flex-direction: row;
     align-items: stretch;
+}
+
+#main-content {
+    padding: 0 12px;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 99vh;
 }
 
 #navbar {
@@ -62,35 +21,9 @@ button:active {
 }
 
 #navbar button {
-    border: none;
-    color: white;
-    background-color: transparent;
+    padding: 10px;
     text-align: left;
     text-wrap: nowrap;
-    padding: 10px;
-    border-radius: 4px;
-    font-size: 10pt;
-}
-
-#navbar button:hover {
-    background: rgba(255, 255, 255, 0.1);
-}
-
-#navbar button:active {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-#navbar .selected {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-#main-content {
-    color: white;
-    padding: 0 12px;
-    flex-grow: 1;
-    overflow-y: auto;
-    overflow-x: hidden;
-    height: 99vh;
 }
 
 /* Until backdrop-filter is fixed we can't hide the underlying content */
@@ -103,7 +36,7 @@ button:active {
 
 #page-description {
     font-size: 10pt;
-    color: darkgray;
+    color: var(--text-secondary);
 }
 
 #iwad-list {
@@ -119,7 +52,8 @@ button:active {
 }
 
 .iwad-item {
-    background: rgba(255, 255, 255, 0.05);
+    background: var(--background-default);
+    border: 1px solid var(--border-default);
     border-radius: 4px;
     padding: 14px;
     display: flex;
@@ -128,19 +62,9 @@ button:active {
 }
 
 .iwad-item > button {
-    background: transparent;
-    color: white;
     font-size: 14pt;
-    min-width: 0;
     margin-right: 12px;
-}
-
-.iwad-item > button:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.iwad-item > button:active {
-    background: transparent;
+    min-width: 0;
 }
 
 #iwad-adder {
@@ -171,95 +95,26 @@ button:active {
 
 .iwad-description {
     font-size: 9pt;
-    color: darkgray;
-}
-
-.show-modal {
-    display: block !important;
-}
-
-#add-iwad-dialog {
-    padding: 0;
-    color: white;
-    /* Background should be transparent, but until backdrop-filter is fixed we can't hide the underlying content */
-    /* See https://github.com/wailsapp/wails/issues/2340 */
-    background-color: #2b2b2b;
-    border: 1px solid #393939;
-    width: 36%;
-    border-radius: 8px;
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
-}
-
-#add-iwad-dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.3);
+    color: var(--text-secondary);
 }
 
 #iwad-options-modal {
-    padding: 4px;
     display: flex;
     flex-direction: column;
-    /* Background should be transparent, but until backdrop-filter is fixed we can't hide the underlying content */
-    /* See https://github.com/wailsapp/wails/issues/2340 */
-    background-color: #383838;
-    border: 1px solid #393939;
-    border-radius: 8px;
     gap: 4px;
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
-}
-
-#iwad-options-modal::backdrop {
-    background: transparent;
 }
 
 #iwad-options-modal button {
-    background: transparent;
-    color: white;
-    text-align: left;
-    padding: 4px 8px;
-    min-width: 250px;
     font-size: 10.5pt;
+    min-width: 250px;
+    padding: 4px 11px;
+    text-align: left;
 }
 
-#iwad-options-modal button:hover {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-#iwad-options-modal button:active {
-    background: transparent;
-}
-
-#remove-iwad-dialog {
-    padding: 0;
-    color: white;
-    /* Background should be transparent, but until backdrop-filter is fixed we can't hide the underlying content */
-    /* See https://github.com/wailsapp/wails/issues/2340 */
-    background-color: #2b2b2b;
-    border: 1px solid #393939;
-    width: 36%;
-    border-radius: 8px;
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.3);
-}
-
-#remove-iwad-dialog .modal-content>p {
+#remove-iwad-dialog .modal-content > p {
     font-size: 10pt;
-    color: darkgray;
+    color: var(--text-secondary);
     margin-top: 0;
-}
-
-#remove-iwad-dialog::backdrop {
-    background-color: rgba(0, 0, 0, 0.3);
-}
-
-#remove-iwad-dialog #iwad-submit {
-    background-color: darkred;
-}
-
-#remove-iwad-dialog #iwad-submit:hover {
-    background-color: crimson;
-}
-
-#remove-iwad-dialog #iwad-submit:active {
-    background-color: darkred;
 }
 
 .modal-content,
@@ -279,7 +134,7 @@ button:active {
 }
 
 .modal-buttons {
-    background-color: rgba(0, 0, 0, 0.25);
+    border-width: 1px 0 0 0;
     padding: 20px;
     display: flex;
     flex-direction: row;
@@ -287,43 +142,11 @@ button:active {
 }
 
 .modal-buttons button {
-    background-color: rgba(255, 255, 255, 0.05);
-    border: 0;
-    border-radius: 4px;
-    min-width: 130px;
-    padding: 8px;
-    font-size: 10pt;
-    color: white;
     flex-grow: 1;
-}
-
-.modal-buttons button:hover {
-    background: rgba(255, 255, 255, 0.075);
-}
-
-.modal-buttons button:active {
-    background: rgba(255, 255, 255, 0.05);
-}
-
-.modal-buttons button:disabled {
-    background: rgba(255, 255, 255, 0.05);
-    color: #6d6d6d;
 }
 
 .modal-content input[type="text"] {
-    background: rgba(255, 255, 255, 0.075);
-    color: white;
-    font-size: 14px;
-    padding: 0.25em 0.5em;
-    border: 2px solid #3a3a3a;
-    border-bottom: 1px solid #9f9f9f;
-    border-radius: 8px;
-    font-size: 14px;
     flex-grow: 1;
-}
-
-.modal-content input[type="text"]:focus {
-    background: rgba(0, 0, 0, 0.2);
 }
 
 #iwad-file-txt-wrapper {
@@ -334,15 +157,6 @@ button:active {
 
 #iwad-file-txt-wrapper button {
     min-width: 0;
-    background-color: transparent;
-}
-
-#iwad-file-txt-wrapper button:hover {
-    background-color: rgba(255, 255, 255, 0.05);
-}
-
-#iwad-file-txt-wrapper button:active {
-    background-color: transparent;
 }
 
 #iwad-file-txt {

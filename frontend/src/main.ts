@@ -1,3 +1,4 @@
+import "./app.css";
 import "./style.css";
 
 import {
@@ -132,9 +133,9 @@ window.navigateTo = async function (page: string) {
 
     Array.from(navButtons).forEach((btn) => {
         if (btn.id === `nav-${page}`) {
-            btn.classList.add("selected");
+            btn.classList.add("btn-selected");
         } else {
-            btn.classList.remove("selected");
+            btn.classList.remove("btn-selected");
         }
     });
 

@@ -2,15 +2,17 @@
     <h2 class="modal-title">New IWAD</h2>
     <form autocomplete="off" onsubmit="submitAddIWADForm(event)">
         <div class="modal-content">
-            <label for="iwad-name-txt">Name</label>
+            <div class="label">Name</div>
             <input id="iwad-name-txt" type="text" oninput="validateAddIWADForm()" autofocus />
-            <label for="iwad-file-txt">File</label>
+            <div class="label">File</div>
             <div id="iwad-file-txt-wrapper">
                 <input id="iwad-file-txt" type="text" oninput="validateAddIWADForm()" />
-                <button type="button" title="Choose file" onmousedown="selectIWADFile()">📂</button>
+                <button type="button" class="btn-transparent" title="Choose file" onmousedown="selectIWADFile()">
+                    📂
+                </button>
             </div>
         </div>
-        <div class="modal-buttons">
+        <div class="modal-buttons contrast">
             <button id="iwad-submit" type="submit" disabled>Create</button>
             <button type="button" onmousedown="closeAddIWADModal()">Cancel</button>
         </div>

@@ -3,7 +3,7 @@
     <div id="iwad-adder" class="iwad-item">
         <div class="iwad-info">
             <p class="iwad-title">Add a new IWAD</p>
-            <button onmousedown="openAddIWADModal()">Add</button>
+            <button class="btn-accent" onmousedown="openAddIWADModal()">Add</button>
         </div>
     </div>
     {{range .IWADs}}
@@ -12,7 +12,9 @@
             <p class="iwad-title">{{.Name}}</p>
             <p class="iwad-description">{{.Path}}</p>
         </div>
-        <button type="button" title="More options" onmousedown="openIWADOptionsModal(event)">...</button>
+        <button type="button" class="btn-transparent" title="More options" onmousedown="openIWADOptionsModal(event)">
+            ...
+        </button>
     </div>
     {{end}}
 </div>
