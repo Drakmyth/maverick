@@ -125,9 +125,18 @@ dialog {
     background: var(--background-dialog);
     border: 1px solid var(--border-dialog);
     border-radius: 8px;
-    box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
     padding: 0;
     width: 36%;
+}
+
+@media (prefers-reduced-transparency: no-preference) {
+    dialog {
+        box-shadow: 0 8px 20px rgba(0, 0, 0, 0.2);
+    }
+
+    .dlg-overlay {
+        box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15);
+    }
 }
 
 dialog::backdrop {
@@ -212,7 +221,6 @@ input[type="text"]:hover:not(input[type="text"]:focus-visible) {
     /* See https://github.com/wailsapp/wails/issues/2340 */
     background: var(--background-overlay-flat);
     border: 1px solid var(--border-overlay);
-    box-shadow: 0 8px 10px rgba(0, 0, 0, 0.15);
     padding: 4px;
     width: fit-content;
 }
