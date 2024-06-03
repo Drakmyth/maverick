@@ -17,6 +17,7 @@
         --background-input-hover: rgba(0, 0, 0, 0.012); /* rgb(252, 252, 252) */
         --background-overlay-flat: rgb(249, 249, 249);
         --background-pressed: rgba(0, 0, 0, 0.025); /* rgb(237, 237, 237) */
+        --background-pressed-strong: rgba(0, 0, 0, 0.007); /* rgb(245, 245, 245) */
         --background-contrast: rgba(0, 0, 0, 0.03); /* rgb(243, 243, 243) */
         --background-disabled: rgba(255, 255, 255, 0.045); /* rgb(245, 245, 245) */
         --background-accent-default: rgb(0, 103, 192);
@@ -50,6 +51,7 @@
         --background-input-focused: rgba(0, 0, 0, 0.209); /* rgb(34, 34, 34) */
         --background-input-hover: rgba(255, 255, 255, 0.08); /* rgb(60, 60, 60) */
         --background-pressed: rgba(255, 255, 255, 0.04); /* rgb(41, 41, 41) */
+        --background-pressed-strong: rgba(255, 255, 255, 0.031); /* rgb(39, 39, 39) */
         --background-overlay-flat: rgb(44, 44, 44);
         --background-contrast: rgba(0, 0, 0, 0.25); /* rgb(32, 32, 32) */
         --background-disabled: rgba(255, 255, 255, 0.045); /* rgb(42, 42, 42) */
@@ -199,6 +201,10 @@ input[type="text"]:hover:not(input[type="text"]:focus-visible) {
 
 .contrast button:hover:enabled:not(.btn-accent) {
     background: var(--background-hover-strong);
+}
+
+.contrast button:active:enabled:not(.btn-accent) {
+    background: var(--background-pressed-strong);
 }
 
 .dlg-overlay {
