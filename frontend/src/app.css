@@ -1,7 +1,3 @@
-:root {
-    color-scheme: dark light;
-}
-
 @media (prefers-color-scheme: light) {
     :root {
         --text-default: rgb(26, 26, 26);
