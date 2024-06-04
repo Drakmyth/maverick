@@ -52,9 +52,19 @@ func (a *App) startup(context context.Context) {
 }
 
 func (a *App) GetContent(name string) string {
+	return a.GetContentWithData(name, nil)
+}
+
+func (a *App) GetContentWithData(name string, data any) string {
 	var tpl bytes.Buffer
 	tmpl := template.Must(template.ParseFS(tmplFS, "templates/"+name+".tmpl.html"))
-	err := tmpl.Execute(&tpl, a)
+
+	tmplData := data
+	if tmplData == nil {
+		tmplData = a
+	}
+
+	err := tmpl.Execute(&tpl, tmplData)
 	if err != nil {
 		panic(err)
 	}
@@ -103,6 +113,11 @@ func (a *App) SaveIWAD(name string, path string) {
 	a.IWADs = append(a.IWADs, iwads.NewIWAD(name, path))
 	iwadConfigPath := filepath.Join(a.configDirectoryPath, IWAD_CONFIG_FILENAME)
 	a.IWADs.SaveToFile(iwadConfigPath)
+}
+
+func (a *App) RemoveIWAD(iwadId string) {
+	print(iwadId)
+	// TODO: Actually remove the IWAD
 }
 
 func getOrCreateConfigDirectory() (string, error) {

@@ -3,25 +3,28 @@ import "./style.css";
 
 import {
     GetContent,
+    GetContentWithData,
     GetPageTitle,
     GetPageDescription,
     SelectIWADFile,
     SaveIWAD,
+    RemoveIWAD,
 } from "../wailsjs/go/main/App";
 
 declare global {
     interface Window {
         openAddIWADModal: () => void;
         closeAddIWADModal: () => void;
-        openRemoveIWADModal: () => void;
+        openRemoveIWADModal: (iwadId: string) => void;
         closeRemoveIWADModal: () => void;
-        openIWADOptionsModal: (event: MouseEvent) => void;
+        openIWADOptionsModal: (event: MouseEvent, iwadId: string) => void;
         closeIWADOptionsModal: () => void;
         navigateTo: (page: string) => void;
         mavInit: () => void;
         selectIWADFile: () => void;
         validateAddIWADForm: () => void;
         submitAddIWADForm: (event: SubmitEvent) => void;
+        removeIWADAndCloseModal: (iwadId: string) => void;
     }
 }
 
@@ -42,14 +45,14 @@ window.closeAddIWADModal = function () {
     dialog.remove();
 };
 
-window.openRemoveIWADModal = async function () {
+window.openRemoveIWADModal = async function (iwadId: string) {
     closeIWADOptionsModal();
-    await onOpenRemoveIWADModal();
+    await onOpenRemoveIWADModal(iwadId);
 };
 
-async function onOpenRemoveIWADModal() {
+async function onOpenRemoveIWADModal(iwadId: string) {
     let template = document.createElement("template");
-    template.innerHTML = await GetContent("remove-iwad-modal");
+    template.innerHTML = await GetContentWithData("remove-iwad-modal", iwadId);
     let dialog = template.content.children[0] as HTMLDialogElement;
 
     let app = document.getElementById("app") as HTMLDivElement;
@@ -64,9 +67,9 @@ window.closeRemoveIWADModal = function () {
     dialog.remove();
 };
 
-window.openIWADOptionsModal = async function (event: MouseEvent) {
+window.openIWADOptionsModal = async function (event: MouseEvent, iwadId: string) {
     let template = document.createElement("template");
-    template.innerHTML = await GetContent("iwad-options-modal");
+    template.innerHTML = await GetContentWithData("iwad-options-modal", iwadId);
     let dialog = template.content.children[0] as HTMLDialogElement;
     dialog.onmousedown = getDialogCoverClickHandler(dialog, closeIWADOptionsModal);
 
@@ -183,5 +186,13 @@ window.submitAddIWADForm = async function (event: SubmitEvent) {
     await SaveIWAD(nameInput.value, pathInput.value);
 
     window.closeAddIWADModal();
+    // TODO: Add row to table instead of reloading page
+    window.navigateTo("iwads");
+};
+
+window.removeIWADAndCloseModal = function (iwadId: string) {
+    RemoveIWAD(iwadId);
+    window.closeRemoveIWADModal();
+    // TODO: Remove row from table instead of reloading page
     window.navigateTo("iwads");
 };

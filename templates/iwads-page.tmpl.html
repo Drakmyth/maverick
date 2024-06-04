@@ -12,7 +12,12 @@
             <p class="iwad-title">{{.Name}}</p>
             <p class="iwad-description">{{.Path}}</p>
         </div>
-        <button type="button" class="btn-transparent" title="More options" onmousedown="openIWADOptionsModal(event)">
+        <button
+            type="button"
+            class="btn-transparent"
+            title="More options"
+            onmousedown="openIWADOptionsModal(event, {{.Id}})"
+        >
             ...
         </button>
     </div>
