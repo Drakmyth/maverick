@@ -115,9 +115,24 @@ func (a *App) SaveIWAD(name string, path string) {
 	a.IWADs.SaveToFile(iwadConfigPath)
 }
 
-func (a *App) RemoveIWAD(iwadId string) {
-	print(iwadId)
-	// TODO: Actually remove the IWAD
+func (a *App) RemoveIWAD(iwadId string) bool {
+	index, err := a.IWADs.FindIndexOf(iwadId)
+	if err != nil {
+		if err == iwads.ErrNotFound {
+			return false
+		} else {
+			panic(err)
+		}
+	}
+
+	a.IWADs = append(a.IWADs[:index], a.IWADs[index+1:]...)
+	iwadConfigPath := filepath.Join(a.configDirectoryPath, IWAD_CONFIG_FILENAME)
+	err = a.IWADs.SaveToFile(iwadConfigPath)
+	if err != nil {
+		panic(err)
+	}
+
+	return true
 }
 
 func getOrCreateConfigDirectory() (string, error) {

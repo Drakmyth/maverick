@@ -2,10 +2,17 @@ package iwads
 
 import (
 	"encoding/json"
+	"errors"
 	"os"
 
 	"github.com/google/uuid"
 )
+
+var (
+	ErrNotFound = errNotFound()
+)
+
+func errNotFound() error { return errors.New("iwad not found") }
 
 type IWADCollection []IWADDefinition
 type IWADDefinition struct {
@@ -39,6 +46,16 @@ func ReadIWADConfigFile(path string) (IWADCollection, error) {
 	}
 
 	return config.IWADs, nil
+}
+
+func (ic IWADCollection) FindIndexOf(iwadId string) (int, error) {
+	for i, iwad := range ic {
+		if iwad.Id == iwadId {
+			return i, nil
+		}
+	}
+
+	return -1, errNotFound()
 }
 
 func (ic IWADCollection) SaveToFile(path string) error {
