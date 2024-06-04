@@ -4,13 +4,13 @@
         <p>Are you sure you want to remove this IWAD?</p>
         <div class="iwad-item">
             <div class="iwad-info">
-                <p class="iwad-title">The Ultimate Doom</p>
-                <p class="iwad-description">G:\Doom\iwads\doom.wad</p>
+                <p class="iwad-title">{{.Name}}</p>
+                <p class="iwad-description">{{.Path}}</p>
             </div>
         </div>
     </div>
     <div class="modal-buttons contrast">
-        <button type="submit" onmousedown="removeIWADAndCloseModal({{.}})">Yes</button>
+        <button type="submit" onmousedown="removeIWADAndCloseModal({{.Id}})">Yes</button>
         <button type="button" onmousedown="closeRemoveIWADModal()">No</button>
     </div>
 </dialog>

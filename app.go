@@ -72,6 +72,15 @@ func (a *App) GetContentWithData(name string, data any) string {
 	return tpl.String()
 }
 
+func (a *App) GetRemoveIWADModal(iwadId string) string {
+	iwad, err := a.IWADs.FindIWAD(iwadId)
+	if err != nil {
+		panic(err)
+	}
+
+	return a.GetContentWithData("remove-iwad-modal", iwad)
+}
+
 func (a *App) GetPageTitle(page string) string {
 	switch page {
 	case "home":

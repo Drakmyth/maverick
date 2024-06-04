@@ -58,6 +58,16 @@ func (ic IWADCollection) FindIndexOf(iwadId string) (int, error) {
 	return -1, errNotFound()
 }
 
+func (ic IWADCollection) FindIWAD(iwadId string) (IWADDefinition, error) {
+	for _, iwad := range ic {
+		if iwad.Id == iwadId {
+			return iwad, nil
+		}
+	}
+
+	return IWADDefinition{}, errNotFound()
+}
+
 func (ic IWADCollection) SaveToFile(path string) error {
 	config := IWADConfigFile{
 		IWADs: ic,

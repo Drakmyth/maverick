@@ -9,6 +9,7 @@ import {
     SelectIWADFile,
     SaveIWAD,
     RemoveIWAD,
+    GetRemoveIWADModal,
 } from "../wailsjs/go/main/App";
 
 declare global {
@@ -52,7 +53,7 @@ window.openRemoveIWADModal = async function (iwadId: string) {
 
 async function onOpenRemoveIWADModal(iwadId: string) {
     let template = document.createElement("template");
-    template.innerHTML = await GetContentWithData("remove-iwad-modal", iwadId);
+    template.innerHTML = await GetRemoveIWADModal(iwadId);
     let dialog = template.content.children[0] as HTMLDialogElement;
 
     let app = document.getElementById("app") as HTMLDivElement;
