@@ -3,13 +3,13 @@ import "./style.css";
 
 import {
     GetContent,
-    GetContentWithData,
     GetPageTitle,
     GetPageDescription,
     SelectIWADFile,
     SaveIWAD,
     RemoveIWAD,
     GetRemoveIWADModal,
+    GetIWADOptionsModal,
 } from "../wailsjs/go/main/App";
 
 declare global {
@@ -70,7 +70,7 @@ window.closeRemoveIWADModal = function () {
 
 window.openIWADOptionsModal = async function (event: MouseEvent, iwadId: string) {
     let template = document.createElement("template");
-    template.innerHTML = await GetContentWithData("iwad-options-modal", iwadId);
+    template.innerHTML = await GetIWADOptionsModal(iwadId);
     let dialog = template.content.children[0] as HTMLDialogElement;
     dialog.onmousedown = getDialogCoverClickHandler(dialog, closeIWADOptionsModal);
 

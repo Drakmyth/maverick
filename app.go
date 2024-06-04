@@ -26,6 +26,12 @@ type App struct {
 	IWADs               iwads.IWADCollection
 }
 
+type IWADOptionsModalData struct {
+	IWADId          string
+	MoveUpEnabled   bool
+	MoveDownEnabled bool
+}
+
 // NewApp creates a new App application struct
 func NewApp() *App {
 	return &App{}
@@ -70,6 +76,19 @@ func (a *App) GetContentWithData(name string, data any) string {
 	}
 
 	return tpl.String()
+}
+
+func (a *App) GetIWADOptionsModal(iwadId string) string {
+	i, _ := a.IWADs.FindIndexOf(iwadId)
+	iwadCnt := len(a.IWADs)
+
+	data := IWADOptionsModalData{
+		IWADId:          iwadId,
+		MoveUpEnabled:   iwadCnt > 1 && i > 0,
+		MoveDownEnabled: iwadCnt > 1 && i < iwadCnt-1 && i > -1,
+	}
+
+	return a.GetContentWithData("iwad-options-modal", data)
 }
 
 func (a *App) GetRemoveIWADModal(iwadId string) string {
