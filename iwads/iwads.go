@@ -68,6 +68,29 @@ func (ic IWADCollection) FindIWAD(iwadId string) (IWADDefinition, error) {
 	return IWADDefinition{}, errNotFound()
 }
 
+func (ic IWADCollection) RemoveIWAD(iwadId string) error {
+	i, err := ic.FindIndexOf(iwadId)
+	if err != nil {
+		return err
+	}
+
+	ic = append(ic[:i], ic[i+1:]...)
+	return nil
+}
+
+func (ic IWADCollection) MoveIWAD(iwadId string, destinationIndex int) error {
+	i, err := ic.FindIndexOf(iwadId)
+	if err != nil {
+		return err
+	}
+
+	iwad := ic[i]
+	ic = append(ic[:i], ic[i+1:]...)
+	ic = append(ic[:destinationIndex+1], ic[destinationIndex:]...)
+	ic[destinationIndex] = iwad
+	return nil
+}
+
 func (ic IWADCollection) SaveToFile(path string) error {
 	config := IWADConfigFile{
 		IWADs: ic,

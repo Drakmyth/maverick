@@ -100,6 +100,36 @@ func (a *App) GetRemoveIWADModal(iwadId string) string {
 	return a.GetContentWithData("remove-iwad-modal", iwad)
 }
 
+func (a *App) MoveIWADUp(iwadId string) bool {
+	i, err := a.IWADs.FindIndexOf(iwadId)
+	if err != nil {
+		return false
+	}
+
+	err = a.IWADs.MoveIWAD(iwadId, i-1)
+	if err != nil {
+		return false
+	}
+
+	err = a.saveIWADConfigFile()
+	return err == nil
+}
+
+func (a *App) MoveIWADDown(iwadId string) bool {
+	i, err := a.IWADs.FindIndexOf(iwadId)
+	if err != nil {
+		return false
+	}
+
+	err = a.IWADs.MoveIWAD(iwadId, i+1)
+	if err != nil {
+		return false
+	}
+
+	err = a.saveIWADConfigFile()
+	return err == nil
+}
+
 func (a *App) GetPageTitle(page string) string {
 	switch page {
 	case "home":
@@ -139,28 +169,22 @@ func (a *App) SelectIWADFile() string {
 
 func (a *App) SaveIWAD(name string, path string) {
 	a.IWADs = append(a.IWADs, iwads.NewIWAD(name, path))
-	iwadConfigPath := filepath.Join(a.configDirectoryPath, IWAD_CONFIG_FILENAME)
-	a.IWADs.SaveToFile(iwadConfigPath)
+	a.saveIWADConfigFile()
 }
 
 func (a *App) RemoveIWAD(iwadId string) bool {
-	index, err := a.IWADs.FindIndexOf(iwadId)
-	if err != nil {
-		if err == iwads.ErrNotFound {
-			return false
-		} else {
-			panic(err)
-		}
-	}
-
-	a.IWADs = append(a.IWADs[:index], a.IWADs[index+1:]...)
-	iwadConfigPath := filepath.Join(a.configDirectoryPath, IWAD_CONFIG_FILENAME)
-	err = a.IWADs.SaveToFile(iwadConfigPath)
+	err := a.IWADs.RemoveIWAD(iwadId)
 	if err != nil {
 		panic(err)
 	}
 
-	return true
+	err = a.saveIWADConfigFile()
+	return err == nil
+}
+
+func (a *App) saveIWADConfigFile() error {
+	iwadConfigPath := filepath.Join(a.configDirectoryPath, IWAD_CONFIG_FILENAME)
+	return a.IWADs.SaveToFile(iwadConfigPath)
 }
 
 func getOrCreateConfigDirectory() (string, error) {

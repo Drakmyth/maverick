@@ -10,6 +10,8 @@ import {
     RemoveIWAD,
     GetRemoveIWADModal,
     GetIWADOptionsModal,
+    MoveIWADUp,
+    MoveIWADDown,
 } from "../wailsjs/go/main/App";
 
 declare global {
@@ -26,6 +28,8 @@ declare global {
         validateAddIWADForm: () => void;
         submitAddIWADForm: (event: SubmitEvent) => void;
         removeIWADAndCloseModal: (iwadId: string) => void;
+        moveIWADUp: (iwadId: string) => void;
+        moveIWADDown: (iwadId: string) => void;
     }
 }
 
@@ -191,9 +195,32 @@ window.submitAddIWADForm = async function (event: SubmitEvent) {
     window.navigateTo("iwads");
 };
 
-window.removeIWADAndCloseModal = function (iwadId: string) {
-    RemoveIWAD(iwadId);
+window.removeIWADAndCloseModal = async function (iwadId: string) {
+    let success = await RemoveIWAD(iwadId);
+    if (!success) {
+        return;
+    }
+
     window.closeRemoveIWADModal();
     // TODO: Remove row from table instead of reloading page
+    window.navigateTo("iwads");
+};
+
+window.moveIWADUp = async function (iwadId: string) {
+    let success = await MoveIWADUp(iwadId);
+    if (!success) {
+        return;
+    }
+
+    closeIWADOptionsModal();
+    window.navigateTo("iwads");
+};
+window.moveIWADDown = async function (iwadId: string) {
+    let success = await MoveIWADDown(iwadId);
+    if (!success) {
+        return;
+    }
+
+    closeIWADOptionsModal();
     window.navigateTo("iwads");
 };
