@@ -1,0 +1,20 @@
+<dialog id="modify-iwad-dialog">
+    <h2 class="modal-title">Modify IWAD</h2>
+    <form autocomplete="off" onsubmit="submitModifyIWADForm(event, {{.Id}})">
+        <div class="modal-content">
+            <div class="label">Name</div>
+            <input id="iwad-name-txt" type="text" value="{{.Name}}" oninput="validateAddIWADForm()" autofocus />
+            <div class="label">File</div>
+            <div id="iwad-file-txt-wrapper">
+                <input id="iwad-file-txt" type="text" value="{{.Path}}" oninput="validateAddIWADForm()" />
+                <button type="button" class="btn-transparent" title="Choose file" onmousedown="selectIWADFile()">
+                    📂
+                </button>
+            </div>
+        </div>
+        <div class="modal-buttons contrast">
+            <button id="iwad-submit" type="submit" disabled>Save</button>
+            <button type="button" onmousedown="closeModifyIWADModal()">Cancel</button>
+        </div>
+    </form>
+</dialog>

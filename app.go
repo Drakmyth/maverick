@@ -100,6 +100,15 @@ func (a *App) GetRemoveIWADModal(iwadId string) string {
 	return a.GetContentWithData("remove-iwad-modal", iwad)
 }
 
+func (a *App) GetModifyIWADModal(iwadId string) string {
+	iwad, err := a.IWADs.FindIWAD(iwadId)
+	if err != nil {
+		panic(err)
+	}
+
+	return a.GetContentWithData("modify-iwad-modal", iwad)
+}
+
 func (a *App) MoveIWADUp(iwadId string) bool {
 	i, err := a.IWADs.FindIndexOf(iwadId)
 	if err != nil {
@@ -169,6 +178,20 @@ func (a *App) SelectIWADFile() string {
 
 func (a *App) SaveIWAD(name string, path string) {
 	a.IWADs = append(a.IWADs, iwads.NewIWAD(name, path))
+	a.saveIWADConfigFile()
+}
+
+func (a *App) SaveModifiedIWAD(name string, path string, iwadId string) {
+	i, err := a.IWADs.FindIndexOf(iwadId)
+	if err != nil {
+		panic(err)
+	}
+
+	a.IWADs[i] = iwads.IWADDefinition{
+		Id:   iwadId,
+		Name: name,
+		Path: path,
+	}
 	a.saveIWADConfigFile()
 }
 

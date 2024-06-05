@@ -12,12 +12,16 @@ import {
     GetIWADOptionsModal,
     MoveIWADUp,
     MoveIWADDown,
+    SaveModifiedIWAD,
+    GetModifyIWADModal,
 } from "../wailsjs/go/main/App";
 
 declare global {
     interface Window {
         openAddIWADModal: () => void;
         closeAddIWADModal: () => void;
+        openModifyIWADModal: (iwadId: string) => void;
+        closeModifyIWADModal: () => void;
         openRemoveIWADModal: (iwadId: string) => void;
         closeRemoveIWADModal: () => void;
         openIWADOptionsModal: (event: MouseEvent, iwadId: string) => void;
@@ -27,6 +31,7 @@ declare global {
         selectIWADFile: () => void;
         validateAddIWADForm: () => void;
         submitAddIWADForm: (event: SubmitEvent) => void;
+        submitModifyIWADForm: (event: SubmitEvent, iwadId: string) => void;
         removeIWADAndCloseModal: (iwadId: string) => void;
         moveIWADUp: (iwadId: string) => void;
         moveIWADDown: (iwadId: string) => void;
@@ -50,12 +55,28 @@ window.closeAddIWADModal = function () {
     dialog.remove();
 };
 
-window.openRemoveIWADModal = async function (iwadId: string) {
+window.openModifyIWADModal = async function (iwadId: string) {
     closeIWADOptionsModal();
-    await onOpenRemoveIWADModal(iwadId);
+
+    let template = document.createElement("template");
+    template.innerHTML = await GetModifyIWADModal(iwadId);
+    let dialog = template.content.children[0] as HTMLDialogElement;
+
+    let app = document.getElementById("app") as HTMLDivElement;
+    app.append(dialog);
+
+    dialog.showModal();
 };
 
-async function onOpenRemoveIWADModal(iwadId: string) {
+window.closeModifyIWADModal = function () {
+    let dialog = document.getElementById("modify-iwad-dialog") as HTMLDialogElement;
+    dialog.close();
+    dialog.remove();
+};
+
+window.openRemoveIWADModal = async function (iwadId: string) {
+    closeIWADOptionsModal();
+
     let template = document.createElement("template");
     template.innerHTML = await GetRemoveIWADModal(iwadId);
     let dialog = template.content.children[0] as HTMLDialogElement;
@@ -64,7 +85,7 @@ async function onOpenRemoveIWADModal(iwadId: string) {
     app.append(dialog);
 
     dialog.showModal();
-}
+};
 
 window.closeRemoveIWADModal = function () {
     let dialog = document.getElementById("remove-iwad-dialog") as HTMLDialogElement;
@@ -191,6 +212,19 @@ window.submitAddIWADForm = async function (event: SubmitEvent) {
     await SaveIWAD(nameInput.value, pathInput.value);
 
     window.closeAddIWADModal();
+    // TODO: Add row to table instead of reloading page
+    window.navigateTo("iwads");
+};
+
+window.submitModifyIWADForm = async function (event: SubmitEvent, iwadId: string) {
+    event.preventDefault();
+
+    let nameInput = document.getElementById("iwad-name-txt") as HTMLInputElement;
+    let pathInput = document.getElementById("iwad-file-txt") as HTMLInputElement;
+
+    await SaveModifiedIWAD(nameInput.value, pathInput.value, iwadId);
+
+    window.closeModifyIWADModal();
     // TODO: Add row to table instead of reloading page
     window.navigateTo("iwads");
 };
