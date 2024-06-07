@@ -10,7 +10,7 @@
         </div>
     </div>
     <div class="modal-buttons contrast">
-        <button type="submit" onmousedown="removeIWADAndCloseModal({{.Id}})">Yes</button>
-        <button type="button" onmousedown="closeRemoveIWADModal()">No</button>
+        <button type="submit" onmousedown="removeIWADModal.submit(event, {{.Id}})">Yes</button>
+        <button type="button" onmousedown="removeIWADModal.close()">No</button>
     </div>
 </dialog>

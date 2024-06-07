@@ -1,6 +1,6 @@
 <dialog id="modify-iwad-dialog">
     <h2 class="modal-title">Modify IWAD</h2>
-    <form autocomplete="off" onsubmit="submitModifyIWADForm(event, {{.Id}})">
+    <form autocomplete="off" onsubmit="modifyIWADModal.submit(event, {{.Id}})">
         <div class="modal-content">
             <div class="label">Name</div>
             <input id="iwad-name-txt" type="text" value="{{.Name}}" oninput="validateAddIWADForm()" autofocus />
@@ -14,7 +14,7 @@
         </div>
         <div class="modal-buttons contrast">
             <button id="iwad-submit" type="submit" disabled>Save</button>
-            <button type="button" onmousedown="closeModifyIWADModal()">Cancel</button>
+            <button type="button" onmousedown="modifyIWADModal.close()">Cancel</button>
         </div>
     </form>
 </dialog>
