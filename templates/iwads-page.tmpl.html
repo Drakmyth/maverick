@@ -1,5 +1,25 @@
-{{define "iwads-page"}} {{template "navbar" "iwads"}}
-<div id="main-content">
-    <span>IWADs page content goes here...</span>
+<div id="iwad-list">
+    <p>Wads</p>
+    <div id="iwad-adder" class="iwad-item">
+        <div class="iwad-info">
+            <p class="iwad-title">Add a new IWAD</p>
+            <button class="btn-accent" onmousedown="addIWADModal.open(event)">Add</button>
+        </div>
+    </div>
+    {{range .IWADs}}
+    <div class="iwad-item">
+        <div class="iwad-info">
+            <p class="iwad-title">{{.Name}}</p>
+            <p class="iwad-description">{{.Path}}</p>
+        </div>
+        <button
+            type="button"
+            class="btn-transparent"
+            title="More options"
+            onmousedown="iwadOptionsModal.open(event, {{.Id}})"
+        >
+            ...
+        </button>
+    </div>
+    {{end}}
 </div>
-{{end}}

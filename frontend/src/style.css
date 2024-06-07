@@ -4,33 +4,161 @@
     align-items: stretch;
 }
 
-#side-nav {
-    height: 100vh;
+#main-content {
+    padding: 0 12px;
+    flex-grow: 1;
+    overflow-y: auto;
+    overflow-x: hidden;
+    height: 99vh;
+}
+
+#navbar {
     min-width: 280px;
-    padding: 0 14px;
+    padding: 0 12px;
     display: flex;
     flex-direction: column;
     gap: 4px;
 }
 
-#side-nav button {
-    border: none;
-    color: white;
-    background-color: transparent;
+#navbar button {
+    padding: 10px;
     text-align: left;
     text-wrap: nowrap;
-    padding: 10px;
+}
+
+/* Until backdrop-filter is fixed we can't hide the underlying content */
+/* See https://github.com/wailsapp/wails/issues/2340 */
+/* #main-content header {
+    position: sticky;
+    top: 0;
+    backdrop-filter: blur(10px);
+} */
+
+#page-description {
+    font-size: 10pt;
+    color: var(--text-secondary);
+}
+
+#iwad-list {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+    padding-bottom: 10px;
+}
+
+#iwad-list > p {
+    margin-bottom: 10px;
+    font-size: 10pt;
+}
+
+.iwad-item {
+    background: var(--background-default);
+    border: 1px solid var(--border-default);
     border-radius: 4px;
+    padding: 14px;
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
 }
 
-#side-nav button:hover {
-    background: rgba(255, 255, 255, 0.2);
+.iwad-item > button {
+    font-size: 14pt;
+    margin-right: 12px;
+    min-width: 0;
 }
 
-#side-nav .selected {
-    background: rgba(255, 255, 255, 0.1);
+#iwad-adder {
+    padding: 16px 14px;
+    margin-bottom: 32px;
+    display: block;
 }
 
-#main-content {
-    color: white;
+#iwad-adder > .iwad-info {
+    display: flex;
+    flex-direction: row;
+    justify-content: space-between;
+    align-items: center;
+}
+
+#iwad-adder .iwad-title {
+    font-size: 10.5pt;
+}
+
+.iwad-info p {
+    margin: 0;
+}
+
+.iwad-title {
+    font-size: 12pt;
+    font-weight: 300;
+}
+
+.iwad-description {
+    font-size: 9pt;
+    color: var(--text-secondary);
+}
+
+#iwad-options-modal {
+    display: flex;
+    flex-direction: column;
+    gap: 4px;
+}
+
+#iwad-options-modal button {
+    font-size: 10.5pt;
+    min-width: 250px;
+    padding: 4px 11px;
+    text-align: left;
+}
+
+#remove-iwad-dialog .modal-content > p {
+    font-size: 10pt;
+    color: var(--text-secondary);
+    margin-top: 0;
+}
+
+.modal-content,
+.modal-title {
+    padding: 0 20px;
+}
+
+.modal-content {
+    display: flex;
+    flex-direction: column;
+    padding-bottom: 20px;
+    gap: 4px;
+}
+
+.modal-content input {
+    margin-bottom: 20px;
+}
+
+.modal-buttons {
+    border-width: 1px 0 0 0;
+    padding: 20px;
+    display: flex;
+    flex-direction: row;
+    gap: 6px;
+}
+
+.modal-buttons button {
+    flex-grow: 1;
+}
+
+.modal-content input[type="text"] {
+    flex-grow: 1;
+}
+
+#iwad-file-txt-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+#iwad-file-txt-wrapper button {
+    min-width: 0;
+}
+
+#iwad-file-txt {
+    margin: 0;
 }

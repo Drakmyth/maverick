@@ -4,10 +4,28 @@
         <meta charset="UTF-8" />
         <meta content="width=device-width, initial-scale=1.0" name="viewport" />
         <title>Maverick</title>
-        <script src="https://unpkg.com/htmx.org@1.9.6"></script>
     </head>
-    <body id="body">
-        <div id="app" hx-get="/home" hx-trigger="load delay:100ms" hx-target="#app" hx-swap="innerHTML"></div>
+    <body id="body" onload="mavInit()">
+        <div id="app">
+            <nav id="navbar">
+                <button id="nav-home" type="button" class="btn-transparent" onmousedown="navigateTo('home')">
+                    🏠 Home
+                </button>
+                <button id="nav-engines" type="button" class="btn-transparent" onmousedown="navigateTo('engines')">
+                    💻 Engines
+                </button>
+                <button id="nav-iwads" type="button" class="btn-transparent" onmousedown="navigateTo('iwads')">
+                    🎮 IWADs
+                </button>
+            </nav>
+            <div id="main-content">
+                <header>
+                    <h1 id="page-title"></h1>
+                    <p id="page-description"></p>
+                </header>
+                <div id="page-content"></div>
+            </div>
+        </div>
         <script src="./src/main.ts" type="module"></script>
     </body>
 </html>

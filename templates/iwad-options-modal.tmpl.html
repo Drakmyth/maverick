@@ -1,0 +1,26 @@
+<dialog id="iwad-options-modal" class="dlg-overlay" autofocus>
+    <button type="button" class="btn-transparent" onmousedown="modifyIWADModal.open(event, {{.IWADId}})">Modify</button>
+    <button
+        type="button"
+        class="btn-transparent"
+        onmousedown="moveIWADUp({{.IWADId}})"
+        {{if
+        not
+        .MoveUpEnabled}}
+        disabled{{end}}
+    >
+        Move Up
+    </button>
+    <button
+        type="button"
+        class="btn-transparent"
+        onmousedown="moveIWADDown({{.IWADId}})"
+        {{if
+        not
+        .MoveDownEnabled}}
+        disabled{{end}}
+    >
+        Move Down
+    </button>
+    <button type="button" class="btn-transparent" onmousedown="removeIWADModal.open(event, {{.IWADId}})">Remove</button>
+</dialog>
