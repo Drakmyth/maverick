@@ -7,6 +7,7 @@ import (
 	"errors"
 	"html/template"
 	"io/fs"
+	"maverick/engines"
 	"maverick/iwads"
 	"os"
 	"path/filepath"
@@ -15,6 +16,7 @@ import (
 )
 
 const IWAD_CONFIG_FILENAME = "iwads.json"
+const ENGINE_CONFIG_FILENAME = "engines.json"
 
 //go:embed templates/*.tmpl.html
 var tmplFS embed.FS
@@ -23,6 +25,7 @@ var tmplFS embed.FS
 type App struct {
 	context             context.Context
 	configDirectoryPath string
+	Engines             engines.EngineCollection
 	IWADs               iwads.IWADCollection
 }
 
@@ -55,6 +58,15 @@ func (a *App) startup(context context.Context) {
 		}
 	}
 	a.IWADs = iwads
+
+	engineConfigPath := filepath.Join(configDir, ENGINE_CONFIG_FILENAME)
+	engines, err := engines.ReadEngineConfigFile(engineConfigPath)
+	if err != nil {
+		if errors.Is(err, fs.ErrNotExist) {
+			engines.SaveToFile(engineConfigPath)
+		}
+	}
+	a.Engines = engines
 }
 
 func (a *App) GetContent(name string) string {
@@ -208,6 +220,11 @@ func (a *App) RemoveIWAD(iwadId string) bool {
 func (a *App) saveIWADConfigFile() error {
 	iwadConfigPath := filepath.Join(a.configDirectoryPath, IWAD_CONFIG_FILENAME)
 	return a.IWADs.SaveToFile(iwadConfigPath)
+}
+
+func (a *App) saveEngineConfigFile() error {
+	engineConfigPath := filepath.Join(a.configDirectoryPath, ENGINE_CONFIG_FILENAME)
+	return a.Engines.SaveToFile(engineConfigPath)
 }
 
 func getOrCreateConfigDirectory() (string, error) {

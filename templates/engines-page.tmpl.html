@@ -1,1 +1,18 @@
-<span>Engines page content goes here...</span>
+<div id="engine-list">
+    <p>Engines</p>
+    <div id="engine-adder" class="engine-item">
+        <div class="engine-info">
+            <p class="engine-title">Add a new Engine</p>
+            <button class="btn-accent">Add</button>
+        </div>
+    </div>
+    {{range .Engines}}
+    <div class="engine-item">
+        <div class="engine-info">
+            <p class="engine-title">{{.Name}}</p>
+            <p class="engine-description">{{.Path}}</p>
+        </div>
+        <button type="button" class="btn-transparent" title="More options">...</button>
+    </div>
+    {{end}}
+</div>
