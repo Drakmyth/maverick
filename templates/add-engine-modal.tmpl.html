@@ -1,0 +1,20 @@
+<dialog id="add-engine-dialog">
+    <h2 class="modal-title">New Engine</h2>
+    <form autocomplete="off" onsubmit="addEngineModal.submit(event)">
+        <div class="modal-content">
+            <div class="label">Name</div>
+            <input id="engine-name-txt" type="text" oninput="validateAddEngineForm()" autofocus />
+            <div class="label">File</div>
+            <div id="engine-file-txt-wrapper">
+                <input id="engine-file-txt" type="text" oninput="validateAddEngineForm()" />
+                <button type="button" class="btn-transparent" title="Choose file" onmousedown="selectEngineFile()">
+                    📂
+                </button>
+            </div>
+        </div>
+        <div class="modal-buttons contrast">
+            <button id="engine-submit" type="submit" disabled>Create</button>
+            <button type="button" onmousedown="addEngineModal.close()">Cancel</button>
+        </div>
+    </form>
+</dialog>

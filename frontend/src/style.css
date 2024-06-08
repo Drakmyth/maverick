@@ -98,6 +98,20 @@
     color: var(--text-secondary);
 }
 
+#iwad-file-txt-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+#iwad-file-txt-wrapper button {
+    min-width: 0;
+}
+
+#iwad-file-txt {
+    margin: 0;
+}
+
 #iwad-options-modal {
     display: flex;
     flex-direction: column;
@@ -147,20 +161,6 @@
 
 .modal-content input[type="text"] {
     flex-grow: 1;
-}
-
-#iwad-file-txt-wrapper {
-    display: flex;
-    flex-direction: row;
-    gap: 8px;
-}
-
-#iwad-file-txt-wrapper button {
-    min-width: 0;
-}
-
-#iwad-file-txt {
-    margin: 0;
 }
 
 #engine-list {
@@ -220,4 +220,18 @@
 .engine-description {
     font-size: 9pt;
     color: var(--text-secondary);
+}
+
+#engine-file-txt-wrapper {
+    display: flex;
+    flex-direction: row;
+    gap: 8px;
+}
+
+#engine-file-txt-wrapper button {
+    min-width: 0;
+}
+
+#engine-file-txt {
+    margin: 0;
 }

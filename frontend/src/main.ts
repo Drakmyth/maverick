@@ -14,6 +14,7 @@ import { AddIWADModal } from "./modals/add-iwad-modal";
 import { ModifyIWADModal } from "./modals/modify-iwad-modal";
 import { RemoveIWADModal } from "./modals/remove-iwad-modal";
 import { IWADOptionsModal } from "./modals/iwad-options-modal";
+import { AddEngineModal } from "./modals/add-engine-modal";
 
 declare global {
     interface Window {
@@ -21,10 +22,12 @@ declare global {
         modifyIWADModal: ModifyIWADModal;
         removeIWADModal: RemoveIWADModal;
         iwadOptionsModal: IWADOptionsModal;
+        addEngineModal: AddEngineModal;
         navigateTo(page: string): void;
         mavInit(): void;
         selectIWADFile(): void;
         validateAddIWADForm(): void;
+        validateAddEngineForm(): void;
         moveIWADUp(iwadId: string): void;
         moveIWADDown(iwadId: string): void;
     }
@@ -34,6 +37,7 @@ window.addIWADModal = new AddIWADModal();
 window.modifyIWADModal = new ModifyIWADModal();
 window.removeIWADModal = new RemoveIWADModal();
 window.iwadOptionsModal = new IWADOptionsModal();
+window.addEngineModal = new AddEngineModal();
 
 window.navigateTo = async function (page: string) {
     let appDiv = document.getElementById("page-content") as HTMLDivElement;
@@ -79,6 +83,15 @@ window.validateAddIWADForm = function () {
     let nameInput = document.getElementById("iwad-name-txt") as HTMLInputElement;
     let pathInput = document.getElementById("iwad-file-txt") as HTMLInputElement;
     let submitButton = document.getElementById("iwad-submit") as HTMLButtonElement;
+
+    let valid = Boolean(nameInput.value.trim()) && Boolean(pathInput.value.trim());
+    submitButton.disabled = !valid;
+};
+
+window.validateAddEngineForm = function () {
+    let nameInput = document.getElementById("engine-name-txt") as HTMLInputElement;
+    let pathInput = document.getElementById("engine-file-txt") as HTMLInputElement;
+    let submitButton = document.getElementById("engine-submit") as HTMLButtonElement;
 
     let valid = Boolean(nameInput.value.trim()) && Boolean(pathInput.value.trim());
     submitButton.disabled = !valid;
